@@ -1,0 +1,49 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <link rel="stylesheet" href="./CSS/estilo.css">
+    <title>Document</title>
+</head>
+<body class="body">
+    <header class="header">
+        <img class="logo" src="./ASSETS/descarga.png" alt="">
+        
+    </header>
+    
+ <div class="form">
+    <form action="" id="formulario" class="form"></form>
+        <h1>Simula tu credito en simples pasos</h1>
+        
+        <div>
+            <label for="capital"> Monto a Solicitar: </label>
+            <input autofocus type="number" name="" id="capital" placeholder="Ingrese cuanto dinero necesita">
+            
+        </div>
+        
+        <div>
+            <label for="Cuotas"> Cantidad de Cuotas:     </label>
+            <input autofocus type="number" name="" id="cuotas" placeholder="Ingrese en cuantas cuotas lo va a pagar">
+        </div>   
+        
+            
+        <div id="aviso">
+            <h3 class="anuncio" id=""> El interes anual es de 96% </h3>
+        </div>
+        <div>
+            
+        
+            <button type="button" onclick="calcular()">CALCULAR</button>
+            
+        </div>
+            
+ </div>
+    
+        
+    
+    
+    <script src="./JS/calculador_intereses.js"></script>
+</body>
+</html>
