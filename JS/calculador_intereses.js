@@ -8,11 +8,11 @@ const tipos = productos.map(p => p.productos)
 
 //calculador de credito para Vehiculos//
 
+const calcularVehiculos = document.getElementById("calcular1");
 
 
 
-
-function calcularVehiculos() {
+ calcularVehiculos.onclick = () => {
 
     let valor1 = parseInt(document.getElementById('capitalVehiculos').value);
     let valor2 = parseInt(document.getElementById('CuotasVehiculos').value);
@@ -64,7 +64,11 @@ function calcularVehiculos() {
 
 //calculador de credito para Hogar//
 
-function calcularHogar() {
+
+const calcularHogar = document.getElementById("calcular2")
+
+
+calcularHogar.onclick = () => {
 
     let valor1H = parseInt(document.getElementById('capitalHogar').value);
     let valor2H = parseInt(document.getElementById('cuotasHogar').value);
@@ -117,7 +121,9 @@ function calcularHogar() {
 
 //calculador de credito para Libre destino//
 
-function calcularLibre() {
+const calcularLibre = document.getElementById("calcular3")
+
+calcularLibre.onclick = () => {
 
     let valor1L = parseInt(document.getElementById('capitalLibre').value);
     let valor2L = parseInt(document.getElementById('cuotasLibre').value);
