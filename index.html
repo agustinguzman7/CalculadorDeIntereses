@@ -10,36 +10,111 @@
 <body class="body">
     <header class="header">
         <img class="logo" src="./ASSETS/descarga.png" alt="">
-        
+        <h1>Simula tu credito en simples pasos</h1>
     </header>
     
- <div class="form">
-    <form action="" id="formulario" class="form"></form>
-        <h1>Simula tu credito en simples pasos</h1>
-        
-        <div>
-            <label for="capital"> Monto a Solicitar: </label>
-            <input autofocus type="number" name="" id="capital" placeholder="Ingrese cuanto dinero necesita">
+
+
+
+  <section class="seccion">
+      <div class="form">
+        <form action="" id="formulario" class="form"></form>
+            <h2>Vehiculos</h2>
+            <div>
+                <label for="ingresoVehiculos"> Ingresos Mensuales: </label>
+                <input autofocus type="number" name="" id="ingresoVehiculos" placeholder="Introduzaca su Ingreso Mensual">
+                
+            </div>
+                    
+            <div>
+                <label for="capitalVehiculos"> Monto a Solicitar: </label>
+                <input autofocus type="number" name="" id="capitalVehiculos" placeholder="Ingrese cuanto dinero necesita">
+                
+            </div>
             
-        </div>
-        
-        <div>
-            <label for="Cuotas"> Cantidad de Cuotas:     </label>
-            <input autofocus type="number" name="" id="cuotas" placeholder="Ingrese en cuantas cuotas lo va a pagar">
-        </div>   
-        
+            <div>
+                <label for="CuotasVehiculos"> Cantidad de Cuotas:     </label>
+                <input autofocus type="number" name="" id="CuotasVehiculos" placeholder="Ingrese en cuantas cuotas lo va a pagar">
+            </div>   
             
+                
+            
+            <div>
+                
+            
+                <button type="button" onclick="calcularVehiculos()">CALCULAR</button>
+                
+            </div>
+        </form>        
+     </div>
+    
+     <div class="form">
+        <form action="" id="formulario" class="form"></form>
+            <h2>Hogar</h2>
+            <div>
+                <label for="ingresoHipoteca"> Valor de la Propiedad </label>
+                <input autofocus type="number" name="" id="ingresoHipoteca" placeholder="Introduzaca el valor de la Propiedad">
+                
+            </div>
+                    
+            <div>
+                <label for="capitalHogar"> Monto a Solicitar: </label>
+                <input autofocus type="number" name="" id="capitalHogar" placeholder="Ingrese cuanto dinero necesita">
+                
+            </div>
+            
+            <div>
+                <label for="CuotasHogar"> Cantidad de Cuotas:     </label>
+                <input autofocus type="number" name="" id="cuotasHogar" placeholder="Ingrese en cuantas cuotas lo va a pagar">
+            </div>   
+            
+                
+            <div>
+                
+            
+                <button type="button" onclick="calcularHogar()">CALCULAR</button>
+                
+            </div>
+                
+     </div>
+    
+     <div class="form">
+        <form action="" id="formulario" class="form"></form>
+            <h2>Libre Destino</h2>
+            <div>
+                <label for="ingresoLibre"> Ingresos Mensuales: </label>
+                <input autofocus type="number" name="" id="ingresoLibre" placeholder="Introduzaca su Ingreso Mensual" required/>
+                
+            </div>
+            
+                    
+            <div>
+                <label for="capitalLibre"> Monto a Solicitar: </label>
+                <input autofocus type="number" name="" id="capitalLibre" placeholder="Ingrese cuanto dinero necesita" required/>
+                
+            </div>
+            
+            <div>
+                <label for="CuotasLibre"> Cantidad de Cuotas:     </label>
+                <input autofocus type="number" name="" id="cuotasLibre" placeholder="Ingrese en cuantas cuotas lo va a pagar" required/>
+            </div>   
+            
+                
+            
+            <div>
+                
+                <button type="button" onclick="calcularLibre()">CALCULAR</button>
+                
+            </div>
+                
+       </div>
+    </section>
+    <section class="seccion2">
         <div id="aviso">
-            <h3 class="anuncio" id=""> El interes anual es de 96% </h3>
+            <h3 class="anuncia" id="info"></h3>
         </div>
         <div>
-            
-        
-            <button type="button" onclick="calcular()">CALCULAR</button>
-            
-        </div>
-            
- </div>
+    </section>
     
         
     
