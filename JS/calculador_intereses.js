@@ -4,58 +4,81 @@ const productos = [
     {Tipo: ' Hogar', Maximo: 1500000, Adicionales: "Seguro Vida", Tasa: 58}]
 productos.unshift ({Tipo: ' Libre destino', Maximo: 500000, Adicionales: "Seguro Vida", Tasa: 78})
 
-const tipos = productos.map(p => p.productos)                
+const tipos = productos.map(p => p.productos)    
+
+
+
+// creditos
+
+
+const creditos = []
+
+const creditosStored = localStorage.getItem('Simulaciones')
+
+
+
 
 //calculador de credito para Vehiculos//
-
 const calcularVehiculos = document.getElementById("calcular1");
 
 
 
- calcularVehiculos.onclick = () => {
-
+calcularVehiculos.onclick = () => {
+    
     let valor1 = parseInt(document.getElementById('capitalVehiculos').value);
     let valor2 = parseInt(document.getElementById('CuotasVehiculos').value);
     let valor3 = parseInt(document.getElementById('ingresoVehiculos').value);
     
-    let Verificacion = valor3*10
-
-       
-    if (valor1 > Verificacion) {
+    let Verificacion = valor3*10 
+    
+    if (valor1 > Verificacion ) {
         alert ("No podemos otorgar este credito debido a que tus ingresos son bajos")
-                                   
-        } else {
-            function iva() {
-                let ivaVehiculos = valor1*0.65;
-                let ivaFinalVehiculos = ivaVehiculos*1.21;
-                return ivaFinalVehiculos
-            }
+        
+    } else if (valor1 === NaN || valor2 === NaN || valor3 === NaN) {
+        alert ('Verifica que todos los campos esten completos')
+        
+    }else {
+        function iva() {
+            let ivaVehiculos = valor1*0.65;
+            let ivaFinalVehiculos = ivaVehiculos*1.21;
+            return ivaFinalVehiculos
+        }
         
         
-            function GastosAdicionalesVehiculos() {
-                const SeguroVehiculo = 3500*valor2;
-                let SelldosVehiculos = valor1*0.01;
-                let GastoFinal = SeguroVehiculo + SelldosVehiculos;
-                return GastoFinal
-            }
+        function GastosAdicionalesVehiculos() {
+            const SeguroVehiculo = 3500*valor2;
+            let SelldosVehiculos = valor1*0.01;
+            let GastoFinal = SeguroVehiculo + SelldosVehiculos;
+            return GastoFinal
             
-            for (let i=1; i<=valor2; i++){
-                let gast = GastosAdicionalesVehiculos() + iva();
-                let gastycap = gast+valor1;
-                let MontoCuota = gastycap / valor2
-                document.getElementById("aviso").innerHTML=document.getElementById("aviso").innerHTML+
-                
-                `<h4>"El TOTAL de tu cuota N "${i} "es de"${MontoCuota}</h4>`
-
-            }
+        }
+        
+        function total (){
+            let gast = GastosAdicionalesVehiculos() + iva();
+            let gastycap = gast+valor1;
+            let MontoCuota = gastycap / valor2
             
+            return MontoCuota
+            
+        }
+        
+        function TotalSolicitado(){
+            const totalSolicitado = GastosAdicionalesVehiculos()+iva()+valor1;
+            
+            return totalSolicitado
+        }
+        creditos.push ({ Total: TotalSolicitado(), Cuota: total(), Cuotas: valor2})
+        localStorage.setItem('Simulaciones', JSON.stringify(creditos))
+        
+        
+        
+        
+    }
+    
+    
+    let info = document.getElementById('info');
+    info.innerText = `"El monto total a abonar es de $" ${TotalSolicitado()} "La cantidad de cuotas son" ${valor2} " Y el monto de la cuota es de $" ${total()}`;
 
-
-               }
-           
-       
-               let info = document.getElementById('info');
-               info.innerText = `"El presente credito incluye Gastos de Sellado y Seguros por: $" ${GastosAdicionalesVehiculos()} "Impuesto al Valor Agregado: $" ${iva()}`;
     
     document.getElementById('capitalVehiculos').value="";
     document.getElementById('CuotasVehiculos').value="";
@@ -95,15 +118,23 @@ calcularHogar.onclick = () => {
                 return GastoFinalHogar
             }
             
-            for (let i=1; i<=valor2H; i++){
+            function totalHogar (){
                 let gastHogar = GastosAdicionalesHogar() + ivaCreditoHogar();
                 let gastycapHogar = gastHogar+valor1H;
                 let MontoCuotaHogar = gastycapHogar / valor2H
-                document.getElementById("aviso").innerHTML=document.getElementById("aviso").innerHTML+
                 
-                `<h4>"El TOTAL de tu cuota N "${i} "es de"${MontoCuotaHogar}</h4>`
-
+                return MontoCuotaHogar
+            
             }
+
+            function TotalSolicitadoHogar(){
+                const totalSolicitadoHogar = GastosAdicionalesHogar()+ivaCreditoHogar()+valor1H;
+                
+                return totalSolicitadoHogar
+            }
+            creditos.push ({ Total: TotalSolicitadoHogar(), Cuota: totalHogar(), Cuotas: valor2H})
+            localStorage.setItem('Simulaciones', JSON.stringify(creditos))
+
             
 
 
@@ -111,7 +142,8 @@ calcularHogar.onclick = () => {
            
        
      let info = document.getElementById('info');
-     info.innerText = `"El presente credito incluye Gastos de Sellado y Seguros por: $" ${GastosAdicionalesHogar()} "Impuesto al Valor Agregado: $" ${ivaCreditoHogar()}`
+     info.innerText = `"El monto total a abonar es de $" ${TotalSolicitadoHogar()} "La cantidad de cuotas son" ${valor2H} " Y el monto de la cuota es de $" ${totalHogar()}`;
+
      document.getElementById('capitalHogar').value="";
      document.getElementById('cuotasHogar').value="";
      document.getElementById('ingresoHipoteca').value="";
@@ -152,15 +184,22 @@ calcularLibre.onclick = () => {
                 return GastoFinalLibre
             }
             
-            for (let i=1; i<=valor2L; i++){
+            function totalLibre (){
                 let gastLibre = GastosAdicionalesLibre() + ivaCreditoLibre();
                 let gastycapLibre = gastLibre+valor1L;
                 let MontoCuotaLibre = gastycapLibre / valor2L
-                document.getElementById("aviso").innerHTML=document.getElementById("aviso").innerHTML+
                 
-                `<h4>"El TOTAL de tu cuota N "${i} "es de"${MontoCuotaLibre}</h4>`
-
+                return MontoCuotaLibre
+            
             }
+
+            function TotalSolicitadoLibre(){
+                const TotalSolicitadoLibre = GastosAdicionalesLibre()+ivaCreditoLibre()+valor1L;
+                
+                return TotalSolicitadoLibre
+            }
+            creditos.push ({ Total: TotalSolicitadoLibre(), Cuota: totalLibre(), Cuotas: valor2L})
+            localStorage.setItem('Simulaciones', JSON.stringify(creditos))
             
 
 
@@ -168,8 +207,8 @@ calcularLibre.onclick = () => {
            
        
      let info = document.getElementById('info');
-     info.innerText = `"El presente credito incluye Gastos de Sellado y Seguros por: $" ${GastosAdicionalesLibre()} "Impuesto al Valor Agregado: $" ${ivaCreditoLibre()}`
-     
+     info.innerText = `"El monto total a abonar es de $" ${TotalSolicitadoLibre()} "La cantidad de cuotas son" ${valor2L} " Y el monto de la cuota es de $" ${totalLibre()}`;
+
     document.getElementById('capitalLibre').value="";
     document.getElementById('cuotasLibre').value="";
     document.getElementById('ingresoLibre').value="";
