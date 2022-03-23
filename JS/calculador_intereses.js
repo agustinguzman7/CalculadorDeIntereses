@@ -1,19 +1,29 @@
 //montos y productos//
-const productos = [
-    {Tipo: ' Vehiculos', Maximo: 900000, Adicionales: "Seguro automotor", Tasa: 65},
-    {Tipo: ' Hogar', Maximo: 1500000, Adicionales: "Seguro Vida", Tasa: 58}]
-productos.unshift ({Tipo: ' Libre destino', Maximo: 500000, Adicionales: "Seguro Vida", Tasa: 78})
 
-const tipos = productos.map(p => p.productos)    
+class productos{
+    constructor(tipo, maximo, adicionales, interes){
+
+        this.tipo = tipo
+        this.maximo = maximo
+        this.adicionales = adicionales
+        this.interes = interes
+    }
+}
+const productoVehiculos = new productos('vehiculos', '900000', 'seguro automotor', '65')
+const productoHogar =  new productos('hogar', '1500000', 'seguro Vida', '58');
+const productoLibreDestino = new productos('libre destino','500000','seguro Vida','78');
+
+    
 
 
 
-// creditos
+// creditos Storage
 
 
-const creditos = []
 
-const creditosStored = localStorage.getItem('Simulaciones')
+let creditos = []
+
+const creditosStored = JSON.parse(localStorage.getItem('Simulaciones')) || []
 
 
 
@@ -25,19 +35,22 @@ const calcularVehiculos = document.getElementById("calcular1");
 
 calcularVehiculos.onclick = () => {
     
-    let valor1 = parseInt(document.getElementById('capitalVehiculos').value);
     let valor2 = parseInt(document.getElementById('CuotasVehiculos').value);
     let valor3 = parseInt(document.getElementById('ingresoVehiculos').value);
-    
-    let Verificacion = valor3*10 
-    
-    if (valor1 > Verificacion ) {
-        alert ("No podemos otorgar este credito debido a que tus ingresos son bajos")
+    let valor1 = parseInt(document.getElementById('capitalVehiculos').value);
+    let edad = document.getElementById('edadVehiculos').value;
+    let Verificacion = valor3*10;
+    let edadMaxima = 65;
+    let edadMinima = 18;
+        
+    if (valor1 > Verificacion || edad > edadMinima || edad < edadMaxima ) {
+        alert ("No podemos otorgar este credito debido a que no cumples con ciertas pautas")
         
     } else if (valor1 === NaN || valor2 === NaN || valor3 === NaN) {
         alert ('Verifica que todos los campos esten completos')
         
     }else {
+        
         function iva() {
             let ivaVehiculos = valor1*0.65;
             let ivaFinalVehiculos = ivaVehiculos*1.21;
@@ -67,12 +80,13 @@ calcularVehiculos.onclick = () => {
             
             return totalSolicitado
         }
-        creditos.push ({ Total: TotalSolicitado(), Cuota: total(), Cuotas: valor2})
+
+        creditos.push ({Tipo:'Vehiculos', Total: TotalSolicitado(), Cuota: total(), Cuotas: valor2})
         localStorage.setItem('Simulaciones', JSON.stringify(creditos))
         
         
         
-        
+         
     }
     
     
@@ -96,11 +110,12 @@ calcularHogar.onclick = () => {
     let valor1H = parseInt(document.getElementById('capitalHogar').value);
     let valor2H = parseInt(document.getElementById('cuotasHogar').value);
     let valor3H = parseInt(document.getElementById('ingresoHipoteca').value);
-    
+    let edadHogar = document.getElementById('edadHogar').value;
     let Hipoteca = valor3H/1.5;
-
+    let edadMaxima = 50;
+    let edadMinima = 18;
        
-    if (valor1H > Hipoteca) {
+    if (valor1H > Hipoteca || edadHogar > edadMinima || edadHogar < edadMaxima ) {
         alert ("No podemos otorgar este credito debido a no puede garantizarlo con el valor de su propiedad")
                                    
         } else {
@@ -132,7 +147,7 @@ calcularHogar.onclick = () => {
                 
                 return totalSolicitadoHogar
             }
-            creditos.push ({ Total: TotalSolicitadoHogar(), Cuota: totalHogar(), Cuotas: valor2H})
+            creditos.push ({Tipo:'Hogar', Total: TotalSolicitadoHogar(), Cuota: totalHogar(), Cuotas: valor2H})
             localStorage.setItem('Simulaciones', JSON.stringify(creditos))
 
             
@@ -160,13 +175,12 @@ calcularLibre.onclick = () => {
     let valor1L = parseInt(document.getElementById('capitalLibre').value);
     let valor2L = parseInt(document.getElementById('cuotasLibre').value);
     let valor3L = parseInt(document.getElementById('ingresoLibre').value);
-    
+    let edadLibre = document.getElementById('edadLibre').value;
     let Libre = valor3L*3; 
-    
-
-    
+    let edadMaxima = 70;
+    let edadMinima = 18;
        
-    if (valor1L > Libre) {
+    if (valor1H > Libre || edadLibre > edadMinima || edadLibre < edadMaxima ) {
         alert ("No podemos otorgar este credito debido a que tus ingresos son bajos")
                                    
         } else {
@@ -198,7 +212,7 @@ calcularLibre.onclick = () => {
                 
                 return TotalSolicitadoLibre
             }
-            creditos.push ({ Total: TotalSolicitadoLibre(), Cuota: totalLibre(), Cuotas: valor2L})
+            creditos.push ({Tipo:'Libre Destino', Total: TotalSolicitadoLibre(), Cuota: totalLibre(), Cuotas: valor2L})
             localStorage.setItem('Simulaciones', JSON.stringify(creditos))
             
 
