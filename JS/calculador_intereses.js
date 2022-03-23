@@ -28,6 +28,7 @@ const creditosStored = JSON.parse(localStorage.getItem('Simulaciones')) || []
 
 
 
+
 //calculador de credito para Vehiculos//
 const calcularVehiculos = document.getElementById("calcular1");
 
@@ -43,7 +44,7 @@ calcularVehiculos.onclick = () => {
     let edadMaxima = 65;
     let edadMinima = 18;
         
-    if (valor1 > Verificacion || edad > edadMinima || edad < edadMaxima ) {
+    if (valor1 > Verificacion || edad < edadMinima || edad > edadMaxima ) {
         alert ("No podemos otorgar este credito debido a que no cumples con ciertas pautas")
         
     } else if (valor1 === NaN || valor2 === NaN || valor3 === NaN) {
@@ -82,6 +83,7 @@ calcularVehiculos.onclick = () => {
         }
 
         creditos.push ({Tipo:'Vehiculos', Total: TotalSolicitado(), Cuota: total(), Cuotas: valor2})
+        console.log(...creditos);
         localStorage.setItem('Simulaciones', JSON.stringify(creditos))
         
         
@@ -115,7 +117,7 @@ calcularHogar.onclick = () => {
     let edadMaxima = 50;
     let edadMinima = 18;
        
-    if (valor1H > Hipoteca || edadHogar > edadMinima || edadHogar < edadMaxima ) {
+    if (valor1H > Hipoteca || edadHogar < edadMinima || edadHogar > edadMaxima ) {
         alert ("No podemos otorgar este credito debido a no puede garantizarlo con el valor de su propiedad")
                                    
         } else {
@@ -148,6 +150,7 @@ calcularHogar.onclick = () => {
                 return totalSolicitadoHogar
             }
             creditos.push ({Tipo:'Hogar', Total: TotalSolicitadoHogar(), Cuota: totalHogar(), Cuotas: valor2H})
+            console.log(...creditos);
             localStorage.setItem('Simulaciones', JSON.stringify(creditos))
 
             
@@ -180,7 +183,7 @@ calcularLibre.onclick = () => {
     let edadMaxima = 70;
     let edadMinima = 18;
        
-    if (valor1H > Libre || edadLibre > edadMinima || edadLibre < edadMaxima ) {
+    if (valor1H > Libre || edadLibre < edadMinima || edadLibre > edadMaxima ) {
         alert ("No podemos otorgar este credito debido a que tus ingresos son bajos")
                                    
         } else {
@@ -213,6 +216,7 @@ calcularLibre.onclick = () => {
                 return TotalSolicitadoLibre
             }
             creditos.push ({Tipo:'Libre Destino', Total: TotalSolicitadoLibre(), Cuota: totalLibre(), Cuotas: valor2L})
+            console.log(...creditos);
             localStorage.setItem('Simulaciones', JSON.stringify(creditos))
             
 
