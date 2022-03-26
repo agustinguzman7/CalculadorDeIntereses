@@ -19,14 +19,9 @@ const productoLibreDestino = new productos('libre destino','500000','seguro Vida
 
 // creditos Storage
 
-
-
 let creditos = []
 
-const creditosStored = JSON.parse(localStorage.getItem('Simulaciones')) || []
-
-
-
+const creditosStored = JSON.parse(localStorage.getItem('Simulaciones'));
 
 
 //calculador de credito para Vehiculos//
@@ -50,7 +45,16 @@ calcularVehiculos.onclick = () => {
     } else if (valor1 === NaN || valor2 === NaN || valor3 === NaN) {
         alert ('Verifica que todos los campos esten completos')
         
-    }else {
+    }else if (creditosStored) {
+        creditos = creditosStored
+        document.getElementById("tab").innerHTML=document.getElementById("tab").innerHTML+
+                            `<tr>
+                                <td> ${creditos.Tipo}</td>
+                                <td> ${creditos.Total}</td>
+                                <td> ${creditos.Cuota}</td>
+                                <td> ${creditos.Cuotas}</td>
+                            </tr>`;
+    } else{
         
         function iva() {
             let ivaVehiculos = valor1*0.65;
@@ -93,8 +97,7 @@ calcularVehiculos.onclick = () => {
     
     
     let info = document.getElementById('info');
-    info.innerText = `"El monto total a abonar es de $" ${TotalSolicitado()} "La cantidad de cuotas son" ${valor2} " Y el monto de la cuota es de $" ${total()}`;
-
+    
     
     document.getElementById('capitalVehiculos').value="";
     document.getElementById('CuotasVehiculos').value="";
