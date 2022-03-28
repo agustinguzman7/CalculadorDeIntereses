@@ -1,8 +1,12 @@
+//import Json
+
+import {dataEnJson} from './data.js';
+
 //montos y productos//
 
 class productos{
     constructor(tipo, maximo, adicionales, interes){
-
+        
         this.tipo = tipo
         this.maximo = maximo
         this.adicionales = adicionales
@@ -13,7 +17,7 @@ const productoVehiculos = new productos('vehiculos', '900000', 'seguro automotor
 const productoHogar =  new productos('hogar', '1500000', 'seguro Vida', '58');
 const productoLibreDestino = new productos('libre destino','500000','seguro Vida','78');
 
-    
+
 
 
 
@@ -23,7 +27,16 @@ let creditos = []
 
 const creditosStored = JSON.parse(localStorage.getItem('Simulaciones'));
 
-
+if (creditosStored) {
+    creditos = creditosStored
+    //document.getElementById("tab").innerHTML=document.getElementById("tab").innerHTML+
+    //`<tr>
+    //  <td> ${creditos.Tipo}</td>
+    //  <td> ${creditos.Total}</td>
+    //  <td> ${creditos.Cuota}</td>
+    //  <td> ${creditos.Cuotas}</td>
+    //</tr>`;
+} 
 //calculador de credito para Vehiculos//
 const calcularVehiculos = document.getElementById("calcular1");
 
@@ -38,24 +51,24 @@ calcularVehiculos.onclick = () => {
     let Verificacion = valor3*10;
     let edadMaxima = 65;
     let edadMinima = 18;
-        
+    
     if (valor1 > Verificacion || edad < edadMinima || edad > edadMaxima ) {
-        alert ("No podemos otorgar este credito debido a que no cumples con ciertas pautas")
+        Swal.fire({
+            icon: 'error',
+            title: 'No podemos otorgarte el credito',
+            text: 'Puede que tus ingresos sean bajos o que uno de los campos este vacio',
+            footer: '<a href="">Why do I have this issue?</a>'
+        })
         
-    } else if (valor1 === NaN || valor2 === NaN || valor3 === NaN) {
-        alert ('Verifica que todos los campos esten completos')
         
-    }else if (creditosStored) {
-        creditos = creditosStored
-        document.getElementById("tab").innerHTML=document.getElementById("tab").innerHTML+
-                            `<tr>
-                                <td> ${creditos.Tipo}</td>
-                                <td> ${creditos.Total}</td>
-                                <td> ${creditos.Cuota}</td>
-                                <td> ${creditos.Cuotas}</td>
-                            </tr>`;
-    } else{
-        
+    } else {
+        Swal.fire({
+            position: 'center',
+            icon: 'success',
+            title: 'Calculo Exitoso',
+            showConfirmButton: false,
+            timer: 1500
+        })    
         function iva() {
             let ivaVehiculos = valor1*0.65;
             let ivaFinalVehiculos = ivaVehiculos*1.21;
@@ -85,19 +98,21 @@ calcularVehiculos.onclick = () => {
             
             return totalSolicitado
         }
-
+        
+        let info = document.getElementById('info');
+        info.innerText = `"El monto total a abonar es de $" ${TotalSolicitado()} "La cantidad de cuotas son" ${valor2} " Y el monto de la cuota es de $" ${total()}`;
         creditos.push ({Tipo:'Vehiculos', Total: TotalSolicitado(), Cuota: total(), Cuotas: valor2})
         console.log(...creditos);
         localStorage.setItem('Simulaciones', JSON.stringify(creditos))
         
         
         
-         
+        
     }
     
     
-    let info = document.getElementById('info');
     
+        
     
     document.getElementById('capitalVehiculos').value="";
     document.getElementById('CuotasVehiculos').value="";
@@ -111,7 +126,7 @@ const calcularHogar = document.getElementById("calcular2")
 
 
 calcularHogar.onclick = () => {
-
+    
     let valor1H = parseInt(document.getElementById('capitalHogar').value);
     let valor2H = parseInt(document.getElementById('cuotasHogar').value);
     let valor3H = parseInt(document.getElementById('ingresoHipoteca').value);
@@ -119,18 +134,31 @@ calcularHogar.onclick = () => {
     let Hipoteca = valor3H/1.5;
     let edadMaxima = 50;
     let edadMinima = 18;
-       
+    
     if (valor1H > Hipoteca || edadHogar < edadMinima || edadHogar > edadMaxima ) {
-        alert ("No podemos otorgar este credito debido a no puede garantizarlo con el valor de su propiedad")
-                                   
-        } else {
+        
+        Swal.fire({
+            icon: 'error',
+            title: 'No podemos otorgarte el credito',
+            text: 'Puede que tu hipoteca no garantice el prestamo o que uno de los campos este vacio',
+            footer: '<a href="">Why do I have this issue?</a>'
+        })
+    } else {
+            
+        Swal.fire({
+            position: 'center',
+            icon: 'success',
+            title: 'Calculo Exitoso',
+            showConfirmButton: false,
+            timer: 1500
+        })
             function ivaCreditoHogar() {
                 let ivaHogar = valor1H*0.58;
                 let ivaFinalHogar = ivaHogar*1.21;
                 return ivaFinalHogar
             }
-        
-        
+            
+            
             function GastosAdicionalesHogar() {
                 let SeguroHogar = valor1H*0.2;
                 let SelldosHogar = valor1H*0.02;
@@ -144,9 +172,9 @@ calcularHogar.onclick = () => {
                 let MontoCuotaHogar = gastycapHogar / valor2H
                 
                 return MontoCuotaHogar
-            
+                
             }
-
+            
             function TotalSolicitadoHogar(){
                 const totalSolicitadoHogar = GastosAdicionalesHogar()+ivaCreditoHogar()+valor1H;
                 
@@ -155,48 +183,59 @@ calcularHogar.onclick = () => {
             creditos.push ({Tipo:'Hogar', Total: TotalSolicitadoHogar(), Cuota: totalHogar(), Cuotas: valor2H})
             console.log(...creditos);
             localStorage.setItem('Simulaciones', JSON.stringify(creditos))
-
             
+            
+            
+            
+        }
+        
+        
+        let info = document.getElementById('info');
+        info.innerText = `"El monto total a abonar es de $" ${TotalSolicitadoHogar()} "La cantidad de cuotas son" ${valor2H} " Y el monto de la cuota es de $" ${totalHogar()}`;
+        
+        document.getElementById('capitalHogar').value="";
+        document.getElementById('cuotasHogar').value="";
+        document.getElementById('ingresoHipoteca').value="";
+        
+        
+    }
 
-
-               }
-           
-       
-     let info = document.getElementById('info');
-     info.innerText = `"El monto total a abonar es de $" ${TotalSolicitadoHogar()} "La cantidad de cuotas son" ${valor2H} " Y el monto de la cuota es de $" ${totalHogar()}`;
-
-     document.getElementById('capitalHogar').value="";
-     document.getElementById('cuotasHogar').value="";
-     document.getElementById('ingresoHipoteca').value="";
-     
+    //calculador de credito para Libre destino//
     
-}
-
-//calculador de credito para Libre destino//
-
-const calcularLibre = document.getElementById("calcular3")
-
-calcularLibre.onclick = () => {
-
-    let valor1L = parseInt(document.getElementById('capitalLibre').value);
-    let valor2L = parseInt(document.getElementById('cuotasLibre').value);
-    let valor3L = parseInt(document.getElementById('ingresoLibre').value);
-    let edadLibre = document.getElementById('edadLibre').value;
-    let Libre = valor3L*3; 
-    let edadMaxima = 70;
-    let edadMinima = 18;
-       
-    if (valor1H > Libre || edadLibre < edadMinima || edadLibre > edadMaxima ) {
-        alert ("No podemos otorgar este credito debido a que tus ingresos son bajos")
-                                   
+    const calcularLibre = document.getElementById("calcular3")
+    
+    calcularLibre.onclick = () => {
+        
+        let valor1L = parseInt(document.getElementById('capitalLibre').value);
+        let valor2L = parseInt(document.getElementById('cuotasLibre').value);
+        let valor3L = parseInt(document.getElementById('ingresoLibre').value);
+        let edadLibre = document.getElementById('edadLibre').value;
+        let Libre = valor3L*3; 
+        let edadMaxima = 70;
+        let edadMinima = 18;
+        
+        if (valor1L > Libre || edadLibre < edadMinima || edadLibre > edadMaxima ) {
+            Swal.fire({
+                icon: 'error',
+                title: 'No podemos otorgarte el credito',
+                text: 'Puede que tus ingresos sean bajos o que uno de los campos este vacio',
+                footer: '<a href="">Why do I have this issue?</a>'
+            })                   
         } else {
+            Swal.fire({
+                position: 'center',
+                icon: 'success',
+                title: 'Calculo Exitoso',
+                showConfirmButton: false,
+                timer: 1500
+            })
             function ivaCreditoLibre() {
                 let ivaLibre = valor1L*0.78;
                 let ivaFinalLibre = ivaLibre*1.21;
                 return ivaFinalLibre
             }
-        
-        
+            
+            
             function GastosAdicionalesLibre() {
                 let SeguroLibre = valor1L*0.12;
                 let SelldosLibre= valor1L*0.02;
@@ -210,9 +249,9 @@ calcularLibre.onclick = () => {
                 let MontoCuotaLibre = gastycapLibre / valor2L
                 
                 return MontoCuotaLibre
-            
+                
             }
-
+            
             function TotalSolicitadoLibre(){
                 const TotalSolicitadoLibre = GastosAdicionalesLibre()+ivaCreditoLibre()+valor1L;
                 
@@ -222,16 +261,18 @@ calcularLibre.onclick = () => {
             console.log(...creditos);
             localStorage.setItem('Simulaciones', JSON.stringify(creditos))
             
-
-
-               }
-           
-       
-     let info = document.getElementById('info');
-     info.innerText = `"El monto total a abonar es de $" ${TotalSolicitadoLibre()} "La cantidad de cuotas son" ${valor2L} " Y el monto de la cuota es de $" ${totalLibre()}`;
-
-    document.getElementById('capitalLibre').value="";
-    document.getElementById('cuotasLibre').value="";
-    document.getElementById('ingresoLibre').value="";
+            
+            
+        }
+        
+        
+        let info = document.getElementById('info');
+        info.innerText = `"El monto total a abonar es de $" ${TotalSolicitadoLibre()} "La cantidad de cuotas son" ${valor2L} " Y el monto de la cuota es de $" ${totalLibre()}`;
+        
+        document.getElementById('capitalLibre').value="";
+        document.getElementById('cuotasLibre').value="";
+        document.getElementById('ingresoLibre').value="";
+        
+    }
     
-}
+    

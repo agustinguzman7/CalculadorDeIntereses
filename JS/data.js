@@ -1,0 +1,1 @@
+export const dataEnJson = '[{"Tipo": "Pequeñas Inversiones","Minimo": 1000,"Maximo": 100000,"Interes":  32.5,"Plazo": 30},{"Tipo": "Medianas Inversiones","Minimo": 100000,"Maximo": 500000,"Interes":  38,"Plazo": 180},{"Tipo": "Grandes Inversiones","Minimo": 500000,"Maximo": 5000000,"Interes":  42,"Plazo": 365},]'
