@@ -1,7 +1,7 @@
 //import Json
 
 import {dataEnJson} from './data.js';
-
+console.log(dataEnJson);
 //montos y productos//
 
 class productos{
@@ -23,45 +23,42 @@ const productoLibreDestino = new productos('libre destino','500000','seguro Vida
 
 // creditos Storage
 
+
+
 let creditos = []
 
 const creditosStored = JSON.parse(localStorage.getItem('Simulaciones'));
 
-if (creditosStored) {
+if(creditosStored) {
     creditos = creditosStored
-    //document.getElementById("tab").innerHTML=document.getElementById("tab").innerHTML+
-    //`<tr>
-    //  <td> ${creditos.Tipo}</td>
-    //  <td> ${creditos.Total}</td>
-    //  <td> ${creditos.Cuota}</td>
-    //  <td> ${creditos.Cuotas}</td>
-    //</tr>`;
-} 
-//calculador de credito para Vehiculos//
-const calcularVehiculos = document.getElementById("calcular1");
+    } 
 
 
-
-calcularVehiculos.onclick = () => {
+    //calculador de credito para Vehiculos//
+    const calcularVehiculos = document.getElementById("calcular1");
     
-    let valor2 = parseInt(document.getElementById('CuotasVehiculos').value);
-    let valor3 = parseInt(document.getElementById('ingresoVehiculos').value);
-    let valor1 = parseInt(document.getElementById('capitalVehiculos').value);
-    let edad = document.getElementById('edadVehiculos').value;
-    let Verificacion = valor3*10;
-    let edadMaxima = 65;
-    let edadMinima = 18;
     
-    if (valor1 > Verificacion || edad < edadMinima || edad > edadMaxima ) {
-        Swal.fire({
-            icon: 'error',
-            title: 'No podemos otorgarte el credito',
-            text: 'Puede que tus ingresos sean bajos o que uno de los campos este vacio',
-            footer: '<a href="">Why do I have this issue?</a>'
-        })
+    
+    calcularVehiculos.onclick = () => {
         
+        let valor2 = parseInt(document.getElementById('CuotasVehiculos').value);
+        let valor3 = parseInt(document.getElementById('ingresoVehiculos').value);
+        let valor1 = parseInt(document.getElementById('capitalVehiculos').value);
+        let edad = document.getElementById('edadVehiculos').value;
+        let Verificacion = valor3*10;
+        let edadMaxima = 65;
+        let edadMinima = 18;
         
-    } else {
+        if (valor1 > Verificacion || edad < edadMinima || edad > edadMaxima ) {
+            Swal.fire({
+                icon: 'error',
+                title: 'No podemos otorgarte el credito',
+                text: 'Puede que tus ingresos sean bajos o que uno de los campos este vacio',
+                footer: '<a href="">Why do I have this issue?</a>'
+            })
+            
+            
+        } else {
         Swal.fire({
             position: 'center',
             icon: 'success',
@@ -99,6 +96,14 @@ calcularVehiculos.onclick = () => {
             return totalSolicitado
         }
         
+        document.getElementById("tab").innerHTML=document.getElementById("tab").innerHTML+
+        `<tr>
+          <td> Vehiculos </td>
+          <td> ${TotalSolicitado()}</td>
+          <td> ${total()}</td>
+          <td> ${valor2}</td>
+        </tr>`;
+        
         let info = document.getElementById('info');
         info.innerText = `"El monto total a abonar es de $" ${TotalSolicitado()} "La cantidad de cuotas son" ${valor2} " Y el monto de la cuota es de $" ${total()}`;
         creditos.push ({Tipo:'Vehiculos', Total: TotalSolicitado(), Cuota: total(), Cuotas: valor2})
@@ -108,11 +113,12 @@ calcularVehiculos.onclick = () => {
         
         
         
+        
     }
     
     
     
-        
+    
     
     document.getElementById('capitalVehiculos').value="";
     document.getElementById('CuotasVehiculos').value="";
@@ -180,6 +186,13 @@ calcularHogar.onclick = () => {
                 
                 return totalSolicitadoHogar
             }
+            document.getElementById("tab").innerHTML=document.getElementById("tab").innerHTML+
+        `<tr>
+          <td> Hogar </td>
+          <td> ${TotalSolicitadoHogar()}</td>
+          <td> ${totalHogar()}</td>
+          <td> ${valor2H}</td>
+        </tr>`;
             creditos.push ({Tipo:'Hogar', Total: TotalSolicitadoHogar(), Cuota: totalHogar(), Cuotas: valor2H})
             console.log(...creditos);
             localStorage.setItem('Simulaciones', JSON.stringify(creditos))
@@ -264,7 +277,13 @@ calcularHogar.onclick = () => {
             
             
         }
-        
+        document.getElementById("tab").innerHTML=document.getElementById("tab").innerHTML+
+        `<tr>
+          <td> Libre Destino </td>
+          <td> ${TotalSolicitadoLibre()}</td>
+          <td> ${totalLibre()}</td>
+          <td> ${valor2L}</td>
+        </tr>`;
         
         let info = document.getElementById('info');
         info.innerText = `"El monto total a abonar es de $" ${TotalSolicitadoLibre()} "La cantidad de cuotas son" ${valor2L} " Y el monto de la cuota es de $" ${totalLibre()}`;
