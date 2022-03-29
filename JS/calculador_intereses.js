@@ -31,6 +31,16 @@ const creditosStored = JSON.parse(localStorage.getItem('Simulaciones'));
 
 if(creditosStored) {
     creditos = creditosStored
+    creditos.forEach(e => {
+        
+        document.getElementById("tab").innerHTML=document.getElementById("tab").innerHTML+
+            `<tr>
+              <td> ${e.Tipo} </td>
+              <td> ${e.Total}</td>
+              <td> ${e.Cuota}</td>
+              <td> ${e.Cuotas}</td>
+            </tr>`;
+    });
     } 
 
 
@@ -200,11 +210,11 @@ calcularHogar.onclick = () => {
             
             
             
+            let info = document.getElementById('info');
+            info.innerText = `"El monto total a abonar es de $" ${TotalSolicitadoHogar()} "La cantidad de cuotas son" ${valor2H} " Y el monto de la cuota es de $" ${totalHogar()}`;
+            
         }
         
-        
-        let info = document.getElementById('info');
-        info.innerText = `"El monto total a abonar es de $" ${TotalSolicitadoHogar()} "La cantidad de cuotas son" ${valor2H} " Y el monto de la cuota es de $" ${totalHogar()}`;
         
         document.getElementById('capitalHogar').value="";
         document.getElementById('cuotasHogar').value="";
@@ -279,7 +289,7 @@ calcularHogar.onclick = () => {
         }
         document.getElementById("tab").innerHTML=document.getElementById("tab").innerHTML+
         `<tr>
-          <td> Libre Destino </td>
+          <td> Libre Destino</td>
           <td> ${TotalSolicitadoLibre()}</td>
           <td> ${totalLibre()}</td>
           <td> ${valor2L}</td>
