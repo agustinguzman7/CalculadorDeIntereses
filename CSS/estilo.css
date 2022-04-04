@@ -3,13 +3,11 @@
 }
 
 .body{
-    background: #56ab2f;  /* fallback for old browsers */
-background: -webkit-linear-gradient(to right, #a8e063, #56ab2f);  /* Chrome 10-25, Safari 5.1-6 */
-background: linear-gradient(to right, #a8e063, #56ab2f); /* W3C, IE 10+/ Edge, Firefox 16+, Chrome 26+, Opera 12+, Safari 7+ */
+    
 
 }
 .header{
-    background-color: white;
+    
     display: flex;
     flex-direction: column;
     
@@ -30,15 +28,39 @@ background: linear-gradient(to right, #a8e063, #56ab2f); /* W3C, IE 10+/ Edge, F
     display:flex;
     flex-direction:row;
     justify-content:space-between;
-    background-color: chartreuse;
+    
 
 }
 .seccion2{
-    background-color:rgb(170, 236, 104);
+    
     display: flex;
     flex-direction: column;
     align-items: center;
     justify-items: center;
     text-align: center;
 
+}
+.simulaciones{
+    display: flex;
+    justify-content: center;
+    padding: 7%;   
+    font-size: 150%;
+}
+table{
+    border: solid rgba(86, 117, 118, 0.536) 5px;
+    box-shadow: 20px 20px 20px 10px rgba(0, 0, 0, 0.2);
+}
+
+thead{
+    
+    font-weight: bold;
+    text-align: center;
+}
+tr{
+    
+    text-align: center;
+}
+.tdhead{
+    border-bottom: #173441 2px solid;   
+    text-align: center; 
 }

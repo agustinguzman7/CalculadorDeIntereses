@@ -1,3 +1,36 @@
+const monedaCredito = document.getElementById('moneda_A');
+const monedaPagoCredito = document.getElementById('moneda_B');
+const cantidadCredito = document.getElementById('inputA');
+const cantidadCobro = document.getElementById('inputB');
+const cambioElement = document.getElementById('cambio');
+
+
+function realizarCambio() {
+    const monedaA = monedaCredito.value;
+    const monedaB = monedaPagoCredito.value;
+
+   fetch(`https://api.exchangerate-api.com/v4/latest/${monedaA}`)
+   .then(res => res.json() )
+   .then(data => {
+       const tasa = data.rates[monedaB];
+       
+       cambioElement.innerText = `1 ${monedaA} = ${tasa} ${monedaB}`;
+
+       cantidadCobro.value = (cantidadCredito.value*tasa).toFixed(2);
+
+    } );
+}
+
+monedaCredito.addEventListener('change', realizarCambio);
+monedaPagoCredito.addEventListener('change', realizarCambio);
+cantidadCredito.addEventListener('input', realizarCambio);
+cantidadCobro.addEventListener('input', realizarCambio);
+
+
+
+
+
+
 //import Json
 
 import {dataEnJson} from './data.js';
@@ -31,6 +64,7 @@ const creditosStored = JSON.parse(localStorage.getItem('Simulaciones'));
 
 if(creditosStored) {
     creditos = creditosStored
+    
     creditos.forEach(e => {
         
         document.getElementById("tab").innerHTML=document.getElementById("tab").innerHTML+
@@ -39,10 +73,13 @@ if(creditosStored) {
               <td> ${e.Total}</td>
               <td> ${e.Cuota}</td>
               <td> ${e.Cuotas}</td>
+              
             </tr>`;
     });
+
     } 
 
+    
 
     //calculador de credito para Vehiculos//
     const calcularVehiculos = document.getElementById("calcular1");
@@ -112,7 +149,9 @@ if(creditosStored) {
           <td> ${TotalSolicitado()}</td>
           <td> ${total()}</td>
           <td> ${valor2}</td>
+          
         </tr>`;
+        
         
         let info = document.getElementById('info');
         info.innerText = `"El monto total a abonar es de $" ${TotalSolicitado()} "La cantidad de cuotas son" ${valor2} " Y el monto de la cuota es de $" ${total()}`;
